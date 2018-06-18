@@ -75,6 +75,24 @@ class JSMin {
     $jsmin = new JSMin($js);
     return $jsmin->min();
   }
+  
+  public static function minifyHTML($HTML) {
+	  $HTML = str_replace("\n?>",' ?>',$HTML);
+	  /* remove tabs, spaces, newlines, etc. */
+	  $HTML = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $HTML);
+	  /* add space between <?php and first character of code */
+	  $HTML = preg_replace('/(<?php)/', '$0 ', $HTML);
+	  /* replace 2 spaces after <?php with one */
+	  return str_replace('  ',' ',$HTML);
+  }
+  
+  public static function minifyCSS($CSS) {
+	  /* remove comments */
+	  $CSS = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $CSS);
+	  /* remove tabs, spaces, newlines, etc. */
+	  $CSS = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $CSS);	
+    return $CSS;
+  }
 
   // -- Public Instance Methods ------------------------------------------------
 
